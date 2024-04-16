@@ -1,9 +1,12 @@
 let dots = document.getElementsByClassName("dots-item"),
-  dotsArea = document.getElementsByClassName("dots-block")[0],
+  dotsArea = document.getElementById("dots-block"),
   slides = document.getElementsByClassName("slides-item"),
   prevBtn = document.getElementById("left-button"),
   nextBtn = document.getElementById("right-button"),
-  slideIndex = 1;
+  playBtn = document.getElementById("play-button"),
+  stopBtn = document.getElementById("stop-button"),
+  slideIndex = 1,
+  slideInterval;
 
 showSlides(slideIndex);
 
@@ -26,19 +29,40 @@ function showSlides(n) {
 function plusSlide(n) {
   showSlides((slideIndex += n));
 }
+
 function currentSlide(n) {
   showSlides((slideIndex = n));
 }
+
 prevBtn.onclick = function () {
   plusSlide(-1);
 };
+
 nextBtn.onclick = function () {
   plusSlide(1);
 };
+
 dotsArea.onclick = function (e) {
   for (let i = 0; i < dots.length; i++) {
     if (e.target.classList.contains("dots-item") && e.target === dots[i]) {
       currentSlide(i + 1);
     }
   }
+};
+
+function playSlides() {
+  slideInterval = setInterval(() => {
+    plusSlide(1);
+  }, 2000);
+}
+function stopSlides() {
+  clearInterval(slideInterval);
+}
+
+playBtn.onclick = function () {
+  playSlides();
+};
+
+stopBtn.onclick = function () {
+  stopSlides();
 };
